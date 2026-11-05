@@ -46,6 +46,8 @@ export interface Task {
   priority: TaskPriority;
   status: TaskStatus;
   due_date: string | null;
+  track: string;
+  source_links: string[];
   updated_at: string;
 }
 
@@ -62,4 +64,13 @@ export function countdownParts(targetMs: number, nowMs: number) {
     hours: Math.floor((diff % 86_400_000) / 3_600_000),
     minutes: Math.floor((diff % 3_600_000) / 60_000),
   };
+}
+
+export const TRACKS: Record<string, string> = {
+  core: "Core work",
+  learning: "Lunar Science & Site Familiarization",
+};
+
+export function sourceLabel(url: string) {
+  try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return url; }
 }

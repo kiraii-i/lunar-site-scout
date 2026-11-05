@@ -8,6 +8,17 @@ export const Route = createFileRoute("/_authenticated/resources")({
   component: ResourcesPage,
 });
 
+const LUNAR_SCIENCE: [string, string, string][] = [
+  ["NASA", "Lunar South Pole Region (Moonbase environment)", "https://www.nasa.gov/reference/moonbase-environment/"],
+  ["NASA", "Shackleton Crater: illuminated rim, shadowed interior", "https://science.nasa.gov/resource/shackleton-craters-illuminated-rim-shadowed-interior/"],
+  ["NASA", "Illumination map of the Moon's south pole", "https://science.nasa.gov/resource/illumination-map-of-the-moons-south-pole/"],
+  ["LPI", "Lunar South Pole Atlas", "https://www.lpi.usra.edu/lunar/lunar-south-pole-atlas/"],
+  ["NASA PGDA", "South Pole LOLA DEMs", "https://pgda.gsfc.nasa.gov/products/78"],
+  ["NASA", "Malapert region image", "https://science.nasa.gov/image-detail/20100618/"],
+  ["NASA", "Moon Trek", "https://trek.nasa.gov/moon/"],
+  ["QGIS", "QGIS user manual", "https://docs.qgis.org/latest/en/docs/user_manual/"],
+];
+
 const LINKS: [string, string, string][] = [
   ["Data", "NASA PGDA — LOLA South Pole data", "https://pgda.gsfc.nasa.gov/products/78"],
   ["Data", "LOLA PDS archive", "https://pds-geosciences.wustl.edu/missions/lro/lola.htm"],
@@ -44,6 +55,23 @@ function ResourcesPage() {
               </li>
             ))}
           </ul>
+        </Panel>
+        <Panel title="Lunar Science & Site Familiarization (learning track, Member 1)" className="lg:col-span-2">
+          <ul className="grid gap-x-6 sm:grid-cols-2">
+            {LUNAR_SCIENCE.map(([org, name, url]) => (
+              <li key={url}>
+                <a href={url} target="_blank" rel="noreferrer" className="flex items-center gap-3 border-b border-border py-2 text-sm hover:text-primary">
+                  <span className="w-20 font-mono text-[10px] uppercase text-muted-foreground">{org}</span>
+                  <span className="flex-1">{name}</span>
+                  <ExternalLink className="size-3.5 text-muted-foreground" aria-hidden />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-3 space-y-1.5 text-xs text-muted-foreground">
+            <p><span className="text-foreground">Attribution notes (as described by the sources):</span> the LPI Lunar South Pole Atlas presents a LOLA-derived south-polar map and identifies Shackleton and Malapert. NASA PGDA product 78 includes 5 m/pixel GeoTIFF DEMs in south-polar stereographic X/Y coordinates with MOON_ME/DE421 metadata.</p>
+            <p className="text-warning">Check the coordinate frame, projection, datum/radius, units and NoData value of each specific product before GIS processing. Nothing from these sources is loaded into this app yet.</p>
+          </div>
         </Panel>
         <Panel title="Conventions">
           <dl className="space-y-3 text-sm">

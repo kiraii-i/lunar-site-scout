@@ -11,14 +11,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { PRIORITIES, ROLES, STATUSES, type Task, type TaskStatus, type TeamRole } from "@/lib/team";
+import { PRIORITIES, ROLES, STATUSES, TRACKS, sourceLabel, type Task, type TaskStatus, type TeamRole } from "@/lib/team";
 
 export const Route = createFileRoute("/_authenticated/tasks")({
   head: () => ({ meta: [{ title: "Team Tasks — Lunar Landing Site Navigator" }, { name: "description", content: "Shared task board for the three-person team." }] }),
   component: TasksPage,
 });
 
-const EMPTY: TaskInput = { code: "", title: "", description: "", deliverables: "", owner_role: "WEB", priority: "medium", status: "todo", due_date: "2026-11-12" };
+const EMPTY: TaskInput = { code: "", title: "", description: "", deliverables: "", owner_role: "WEB", priority: "medium", status: "todo", due_date: "2026-11-12", track: "core", source_links: [] };
 
 const prioClass: Record<string, string> = {
   high: "border-destructive/50 text-destructive",
@@ -31,16 +31,17 @@ function TasksPage() {
   const { create, update, remove } = useTaskMutations();
   const [member, setMember] = useState<"all" | TeamRole>("all");
   const [prio, setPrio] = useState<string>("all");
+  const [track, setTrack] = useState<string>("all");
   const [editing, setEditing] = useState<Task | null>(null);
   const [form, setForm] = useState<TaskInput>(EMPTY);
   const [open, setOpen] = useState(false);
 
-  const filtered = tasks.filter((t) => (member === "all" || t.owner_role === member) && (prio === "all" || t.priority === prio));
+  const filtered = tasks.filter((t) => (member === "all" || t.owner_role === member) && (prio === "all" || t.priority === prio) && (track === "all" || t.track === track));
 
   function openNew() { setEditing(null); setForm(EMPTY); setOpen(true); }
   function openEdit(t: Task) {
     setEditing(t);
-    setForm({ code: t.code, title: t.title, description: t.description, deliverables: t.deliverables, owner_role: t.owner_role, priority: t.priority, status: t.status, due_date: t.due_date });
+    setForm({ code: t.code, title: t.title, description: t.description, deliverables: t.deliverables, owner_role: t.owner_role, priority: t.priority, status: t.status, due_date: t.due_date, track: t.track, source_links: t.source_links });
     setOpen(true);
   }
   async function save(e: React.FormEvent) {
@@ -80,6 +81,13 @@ function TasksPage() {
             {PRIORITIES.map((p) => <SelectItem key={p} value={p} className="capitalize">{p}</SelectItem>)}
           </SelectContent>
         </Select>
+        <Select value={track} onValueChange={setTrack}>
+          <SelectTrigger className="w-56" aria-label="Filter by track"><SelectValue /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All tracks</SelectItem>
+            {Object.entries(TRACKS).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}
+          </SelectContent>
+        </Select>
         <Button onClick={openNew}><Plus /> New task</Button>
       </PageHeader>
 
@@ -107,7 +115,15 @@ function TasksPage() {
                       </div>
                     </div>
                     <p className="mt-1 text-sm leading-snug">{t.title}</p>
+                    {t.track === "learning" && <Badge variant="info" className="mt-1">Learning track</Badge>}
                     {t.deliverables && <p className="mt-1 text-xs text-muted-foreground">↳ {t.deliverables}</p>}
+                    {t.source_links.length > 0 && (
+                      <ul className="mt-1.5 space-y-0.5">
+                        {t.source_links.map((u) => (
+                          <li key={u}><a href={u} target="_blank" rel="noreferrer" className="font-mono text-[10px] text-primary hover:underline">Source: {sourceLabel(u)} ↗</a></li>
+                        ))}
+                      </ul>
+                    )}
                     <div className="mt-2 flex flex-wrap items-center gap-1.5">
                       <Badge variant="outline" className="font-mono text-[10px]">{t.owner_role}</Badge>
                       <Badge variant="outline" className={`text-[10px] capitalize ${prioClass[t.priority]}`}>{t.priority}</Badge>
@@ -135,6 +151,15 @@ function TasksPage() {
             </div>
             <div className="space-y-1.5"><Label htmlFor="desc">Description</Label><Textarea id="desc" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
             <div className="space-y-1.5"><Label htmlFor="deliv">Deliverables</Label><Input id="deliv" value={form.deliverables} onChange={(e) => setForm({ ...form, deliverables: e.target.value })} /></div>
+            <div className="space-y-1.5"><Label htmlFor="src">Source links (one URL per line)</Label>
+              <Textarea id="src" className="font-mono text-xs" value={form.source_links.join("\n")} onChange={(e) => setForm({ ...form, source_links: e.target.value.split("\n").map((x) => x.trim()).filter(Boolean) })} />
+            </div>
+            <div className="space-y-1.5"><Label>Track</Label>
+              <Select value={form.track} onValueChange={(v) => setForm({ ...form, track: v })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{Object.entries(TRACKS).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5"><Label>Owner</Label>
                 <Select value={form.owner_role} onValueChange={(v) => setForm({ ...form, owner_role: v as TeamRole })}>
