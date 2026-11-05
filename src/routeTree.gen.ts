@@ -15,8 +15,11 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAnalysisRouteImport } from './routes/_authenticated/analysis'
 import { Route as AuthenticatedCompareRouteImport } from './routes/_authenticated/compare'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDeliverablesRouteImport } from './routes/_authenticated/deliverables'
 import { Route as AuthenticatedGisRouteImport } from './routes/_authenticated/gis'
+import { Route as AuthenticatedResourcesRouteImport } from './routes/_authenticated/resources'
 import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
+import { Route as AuthenticatedTeamRouteImport } from './routes/_authenticated/team'
 import { Route as AuthenticatedTimelineRouteImport } from './routes/_authenticated/timeline'
 
 const IndexRoute = IndexRouteImport.update({
@@ -48,14 +51,30 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDeliverablesRoute =
+  AuthenticatedDeliverablesRouteImport.update({
+    id: '/deliverables',
+    path: '/deliverables',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedGisRoute = AuthenticatedGisRouteImport.update({
   id: '/gis',
   path: '/gis',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedResourcesRoute = AuthenticatedResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTeamRoute = AuthenticatedTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedTimelineRoute = AuthenticatedTimelineRouteImport.update({
@@ -70,8 +89,11 @@ export interface FileRoutesByFullPath {
   '/analysis': typeof AuthenticatedAnalysisRoute
   '/compare': typeof AuthenticatedCompareRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/deliverables': typeof AuthenticatedDeliverablesRoute
   '/gis': typeof AuthenticatedGisRoute
+  '/resources': typeof AuthenticatedResourcesRoute
   '/tasks': typeof AuthenticatedTasksRoute
+  '/team': typeof AuthenticatedTeamRoute
   '/timeline': typeof AuthenticatedTimelineRoute
 }
 export interface FileRoutesByTo {
@@ -80,8 +102,11 @@ export interface FileRoutesByTo {
   '/analysis': typeof AuthenticatedAnalysisRoute
   '/compare': typeof AuthenticatedCompareRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/deliverables': typeof AuthenticatedDeliverablesRoute
   '/gis': typeof AuthenticatedGisRoute
+  '/resources': typeof AuthenticatedResourcesRoute
   '/tasks': typeof AuthenticatedTasksRoute
+  '/team': typeof AuthenticatedTeamRoute
   '/timeline': typeof AuthenticatedTimelineRoute
 }
 export interface FileRoutesById {
@@ -92,8 +117,11 @@ export interface FileRoutesById {
   '/_authenticated/analysis': typeof AuthenticatedAnalysisRoute
   '/_authenticated/compare': typeof AuthenticatedCompareRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/deliverables': typeof AuthenticatedDeliverablesRoute
   '/_authenticated/gis': typeof AuthenticatedGisRoute
+  '/_authenticated/resources': typeof AuthenticatedResourcesRoute
   '/_authenticated/tasks': typeof AuthenticatedTasksRoute
+  '/_authenticated/team': typeof AuthenticatedTeamRoute
   '/_authenticated/timeline': typeof AuthenticatedTimelineRoute
 }
 export interface FileRouteTypes {
@@ -104,8 +132,11 @@ export interface FileRouteTypes {
     | '/analysis'
     | '/compare'
     | '/dashboard'
+    | '/deliverables'
     | '/gis'
+    | '/resources'
     | '/tasks'
+    | '/team'
     | '/timeline'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -114,8 +145,11 @@ export interface FileRouteTypes {
     | '/analysis'
     | '/compare'
     | '/dashboard'
+    | '/deliverables'
     | '/gis'
+    | '/resources'
     | '/tasks'
+    | '/team'
     | '/timeline'
   id:
     | '__root__'
@@ -125,8 +159,11 @@ export interface FileRouteTypes {
     | '/_authenticated/analysis'
     | '/_authenticated/compare'
     | '/_authenticated/dashboard'
+    | '/_authenticated/deliverables'
     | '/_authenticated/gis'
+    | '/_authenticated/resources'
     | '/_authenticated/tasks'
+    | '/_authenticated/team'
     | '/_authenticated/timeline'
   fileRoutesById: FileRoutesById
 }
@@ -180,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/deliverables': {
+      id: '/_authenticated/deliverables'
+      path: '/deliverables'
+      fullPath: '/deliverables'
+      preLoaderRoute: typeof AuthenticatedDeliverablesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/gis': {
       id: '/_authenticated/gis'
       path: '/gis'
@@ -187,11 +231,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedGisRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/resources': {
+      id: '/_authenticated/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof AuthenticatedResourcesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/tasks': {
       id: '/_authenticated/tasks'
       path: '/tasks'
       fullPath: '/tasks'
       preLoaderRoute: typeof AuthenticatedTasksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/team': {
+      id: '/_authenticated/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof AuthenticatedTeamRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/timeline': {
@@ -208,8 +266,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAnalysisRoute: typeof AuthenticatedAnalysisRoute
   AuthenticatedCompareRoute: typeof AuthenticatedCompareRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDeliverablesRoute: typeof AuthenticatedDeliverablesRoute
   AuthenticatedGisRoute: typeof AuthenticatedGisRoute
+  AuthenticatedResourcesRoute: typeof AuthenticatedResourcesRoute
   AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
+  AuthenticatedTeamRoute: typeof AuthenticatedTeamRoute
   AuthenticatedTimelineRoute: typeof AuthenticatedTimelineRoute
 }
 
@@ -217,8 +278,11 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAnalysisRoute: AuthenticatedAnalysisRoute,
   AuthenticatedCompareRoute: AuthenticatedCompareRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDeliverablesRoute: AuthenticatedDeliverablesRoute,
   AuthenticatedGisRoute: AuthenticatedGisRoute,
+  AuthenticatedResourcesRoute: AuthenticatedResourcesRoute,
   AuthenticatedTasksRoute: AuthenticatedTasksRoute,
+  AuthenticatedTeamRoute: AuthenticatedTeamRoute,
   AuthenticatedTimelineRoute: AuthenticatedTimelineRoute,
 }
 
