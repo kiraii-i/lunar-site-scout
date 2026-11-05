@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Science data flows only through `src/lib/science.ts` (types + `fetchAnalysis`/`fetchTimeline` gated on `VITE_SCIENCE_API_URL`); unknowns are null, never 0 — keeps the future FastAPI/SpiceyPy backend pluggable without UI redesign.
+- Team data (tasks, activity, profiles) is shared across all signed-in users via RLS `TO authenticated`, with realtime invalidation in `src/hooks/use-tasks.ts` — the app is a single-team workspace.

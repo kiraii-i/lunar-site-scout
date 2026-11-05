@@ -1,29 +1,26 @@
-# Welcome to your Lovable project
+# Lunar Landing Site Navigator
 
-This project was built with [Lovable](https://lovable.dev).
+Mission-planning and study-area comparison dashboard (Shackleton Crater, Malapert Massif) for a 3-person NASA Space Apps team (Nov 13–14, 2026).
 
-## Build with Lovable
+## Working now
+- Sign in (email/password with email confirmation, or Google).
+- Shared task board (create/edit/delete, status, filters), stored in the Lovable Cloud database with live sync between teammates; activity feed.
+- Dashboard (UTC countdown, progress, roadmap, workload), Deliverables, Team & Access, GIS Explorer scaffold, Analysis/Timeline empty states, Comparison (Pending data), Resources & Methodology.
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+## Inviting the other two teammates
+1. Share `<app URL>/auth`.
+2. Each creates an account (or uses Google) and confirms their email.
+3. Each opens **Team & Access** and selects their role.
+4. When all three have joined, disable new sign-ups: Lovable → More → Users → Auth settings. (Until then, anyone with the link can register and edit tasks.)
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## Pending integrations
+- **SPICE/Python API**: deploy FastAPI with `GET /analysis?site_id&timestamp_utc` and `GET /timeline?site_id&start_utc&end_utc` returning the schemas in `src/lib/science.ts` (CORS on), then set `VITE_SCIENCE_API_URL`.
+- **GIS layers**: export lunar south-polar stereographic COG tiles (IAU 2015 lunar CRS, not WGS84) + metadata JSON; render with a custom-CRS map (e.g. OpenLayers + proj4).
+- **Reference points**: study-area coordinates stay `null` until sourced and verified.
+- **Terrain visibility**: stays `null` until a verified local horizon profile (GIS-03) is integrated.
 
-## Development
+## Scientific rules
+UTC everywhere; unknown values are `null`, never 0; geometric visibility ≠ comms availability; Sun above ideal horizon ≠ power; no overall suitability score.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+## Dev
+`bun install`, `bun run dev`, tests: `bunx vitest run`.
