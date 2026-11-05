@@ -36,7 +36,7 @@ function TeamPage() {
 
   async function save() {
     const { error } = await supabase.from("profiles").upsert({ id: user.id, display_name: name, team_role: (role || null) as TeamRole | null });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Profile saved");
     qc.invalidateQueries({ queryKey: ["profiles"] });
   }
