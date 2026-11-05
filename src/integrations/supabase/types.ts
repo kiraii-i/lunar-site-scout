@@ -14,7 +14,96 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity: {
+        Row: {
+          actor_id: string | null
+          actor_name: string
+          created_at: string
+          id: string
+          message: string
+        }
+        Insert: {
+          actor_id?: string | null
+          actor_name?: string
+          created_at?: string
+          id?: string
+          message: string
+        }
+        Update: {
+          actor_id?: string | null
+          actor_name?: string
+          created_at?: string
+          id?: string
+          message?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string
+          id: string
+          team_role: string | null
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string
+          id: string
+          team_role?: string | null
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          id?: string
+          team_role?: string | null
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          code: string
+          created_at: string
+          deliverables: string
+          description: string
+          due_date: string | null
+          id: string
+          owner_role: string
+          priority: string
+          status: string
+          title: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code?: string
+          created_at?: string
+          deliverables?: string
+          description?: string
+          due_date?: string | null
+          id?: string
+          owner_role: string
+          priority?: string
+          status?: string
+          title: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          deliverables?: string
+          description?: string
+          due_date?: string | null
+          id?: string
+          owner_role?: string
+          priority?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
