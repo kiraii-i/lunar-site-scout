@@ -92,7 +92,7 @@ export type ApiState<T> =
 
 /** Set VITE_SCIENCE_API_URL to the deployed FastAPI base URL to activate. */
 export function scienceApiUrl(): string | null {
-  const url = import.meta.env.VITE_SCIENCE_API_URL as string | undefined;
+  const url = import.meta.env['VITE_SCIENCE_API_URL'] as string | undefined;
   return url && url.length > 0 ? url.replace(/\/$/, "") : null;
 }
 
@@ -125,7 +125,7 @@ export function fmtAngle(v: number | null | undefined) {
   return v === null || v === undefined || Number.isNaN(v) ? "Unavailable" : `${v.toFixed(2)}°`;
 }
 
-export const EXAMPLE_SITE_CONFIG: SiteConfig = SITES[0];
+export const EXAMPLE_SITE_CONFIG: SiteConfig = SITES[0]!;
 
 export const EXAMPLE_ANALYSIS: AnalysisResult = {
   site_id: "shackleton",
@@ -154,7 +154,7 @@ export function validateLayerMetadata(obj: unknown) {
   const missing = REQUIRED_LAYER_PROVENANCE.filter(
     (k) => o[k] === undefined || o[k] === null || o[k] === "",
   );
-  const proj = String(o.projection ?? "").toLowerCase();
+  const proj = String(o['projection'] ?? "").toLowerCase();
   const warnings: string[] = [];
   if (proj.includes("4326") || proj.includes("wgs84") || proj.includes("3857"))
     warnings.push("Earth CRS detected (WGS84/Web Mercator). Lunar data needs a Moon CRS, e.g. IAU_2015:30135 polar stereographic.");
