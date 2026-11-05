@@ -69,8 +69,10 @@ export type Database = {
           id: string
           owner_role: string
           priority: string
+          source_links: string[]
           status: string
           title: string
+          track: string
           updated_at: string
           updated_by: string | null
         }
@@ -83,8 +85,10 @@ export type Database = {
           id?: string
           owner_role: string
           priority?: string
+          source_links?: string[]
           status?: string
           title: string
+          track?: string
           updated_at?: string
           updated_by?: string | null
         }
@@ -97,8 +101,10 @@ export type Database = {
           id?: string
           owner_role?: string
           priority?: string
+          source_links?: string[]
           status?: string
           title?: string
+          track?: string
           updated_at?: string
           updated_by?: string | null
         }
