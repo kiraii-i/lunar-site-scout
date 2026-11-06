@@ -1,4 +1,4 @@
-export type TeamRole = "GIS" | "PY" | "WEB";
+export type TeamRole = "GIS" | "PY" | "WEB" | "AI";
 export type TaskStatus = "todo" | "in_progress" | "review" | "done";
 export type TaskPriority = "high" | "medium" | "low";
 
@@ -14,6 +14,11 @@ export const ROLES: Record<TeamRole, { member: string; title: string; focus: str
     title: "Python & Scientific Computing Lead",
     focus:
       "Python/NumPy/Pandas, SpiceyPy & SPICE kernels, Sun/Earth position, elevation/azimuth, geometric visibility, UTC timeline, horizon integration, JSON/API.",
+  },
+  AI: {
+    member: "Member 4",
+    title: "AI Workflow & Data Management Lead",
+    focus: "AI-assisted development, prompt engineering, structured data validation, file organization, Claude, Manus handoffs, and human review of generated code.",
   },
   WEB: {
     member: "Member 3",

@@ -59,6 +59,154 @@ export type Database = {
         }
         Relationships: []
       }
+      project_audit: {
+        Row: {
+          actor_id: string | null
+          after_data: Json | null
+          before_data: Json | null
+          created_at: string
+          entity_id: string
+          entity_type: string
+          id: string
+        }
+        Insert: {
+          actor_id?: string | null
+          after_data?: Json | null
+          before_data?: Json | null
+          created_at?: string
+          entity_id: string
+          entity_type: string
+          id?: string
+        }
+        Update: {
+          actor_id?: string | null
+          after_data?: Json | null
+          before_data?: Json | null
+          created_at?: string
+          entity_id?: string
+          entity_type?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      project_files: {
+        Row: {
+          archived: boolean
+          created_at: string
+          id: string
+          mime_type: string
+          name: string
+          record_id: string | null
+          replaces_id: string | null
+          review_status: string
+          site_id: string | null
+          size_bytes: number
+          storage_path: string
+          tags: string[]
+          task_id: string | null
+          uploaded_by: string
+          version: number
+        }
+        Insert: {
+          archived?: boolean
+          created_at?: string
+          id?: string
+          mime_type: string
+          name: string
+          record_id?: string | null
+          replaces_id?: string | null
+          review_status?: string
+          site_id?: string | null
+          size_bytes: number
+          storage_path: string
+          tags?: string[]
+          task_id?: string | null
+          uploaded_by?: string
+          version?: number
+        }
+        Update: {
+          archived?: boolean
+          created_at?: string
+          id?: string
+          mime_type?: string
+          name?: string
+          record_id?: string | null
+          replaces_id?: string | null
+          review_status?: string
+          site_id?: string | null
+          size_bytes?: number
+          storage_path?: string
+          tags?: string[]
+          task_id?: string | null
+          uploaded_by?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_files_record_id_fkey"
+            columns: ["record_id"]
+            isOneToOne: false
+            referencedRelation: "project_records"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_files_replaces_id_fkey"
+            columns: ["replaces_id"]
+            isOneToOne: false
+            referencedRelation: "project_files"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_files_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_records: {
+        Row: {
+          archived: boolean
+          created_at: string
+          id: string
+          kind: string
+          name: string
+          payload: Json
+          provenance: Json
+          site_id: string | null
+          updated_at: string
+          updated_by: string
+          verification_status: string
+        }
+        Insert: {
+          archived?: boolean
+          created_at?: string
+          id?: string
+          kind: string
+          name: string
+          payload?: Json
+          provenance?: Json
+          site_id?: string | null
+          updated_at?: string
+          updated_by?: string
+          verification_status?: string
+        }
+        Update: {
+          archived?: boolean
+          created_at?: string
+          id?: string
+          kind?: string
+          name?: string
+          payload?: Json
+          provenance?: Json
+          site_id?: string | null
+          updated_at?: string
+          updated_by?: string
+          verification_status?: string
+        }
+        Relationships: []
+      }
       tasks: {
         Row: {
           code: string
