@@ -5,7 +5,7 @@ import { useTasks } from "@/hooks/use-tasks";
 import { ROLES, STATUSES, progress, type TeamRole } from "@/lib/team";
 
 export const Route = createFileRoute("/_authenticated/deliverables")({
-  head: () => ({ meta: [{ title: "Deliverables & Milestones — Lunar Landing Site Navigator" }, { name: "description", content: "Due dates and outputs for each team member." }] }),
+  head: () => ({ meta: [{ title: "Deliverables & Milestones — Lunar Landing Site Navigator" }, { name: "description", content: "Team task names, due dates and deliverables for lunar mission planning." }, { property: "og:title", content: "Deliverables & Milestones — Lunar Landing Site Navigator" }, { property: "og:description", content: "Team task names, due dates and deliverables for lunar mission planning." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: DeliverablesPage,
 });
 
@@ -44,7 +44,8 @@ function DeliverablesPage() {
                       <span className="font-mono text-xs text-primary">{t.code}</span>
                       <span className="font-mono text-[10px] text-muted-foreground">{t.due_date}</span>
                     </div>
-                    <div className="text-muted-foreground">{t.deliverables || t.title}</div>
+                    <div className="mt-1">{t.title}</div>
+                    {t.deliverables && <div className="text-xs text-muted-foreground">↳ {t.deliverables}</div>}
                     <Badge variant={t.status === "done" ? "live" : "pending"} className="mt-1">{STATUSES.find((s) => s.id === t.status)?.label}</Badge>
                   </li>
                 ))}
