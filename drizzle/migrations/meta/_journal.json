@@ -15,6 +15,13 @@
       "when": 1793920251665,
       "tag": "0001_task_track_and_sources",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793963884258,
+      "tag": "0002_ai_role_project_data_and_private_files",
+      "breakpoints": true
     }
   ]
 }
